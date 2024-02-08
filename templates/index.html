@@ -1,20 +1,25 @@
-'''HTTP/1.1 200 OK
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Get-it</title>
+    <meta charset="UTF-8">
+    <title>Get-it</title>
 </head>
-<body>
+    <body>
 
-<img src="img/logo-getit.png">
-<p>Como o Post-it, mas com outro verbo</p>
+        <img src="img/logo-getit.png">
+        <p>Como o Post-it, mas com outro verbo</p>
 
-<ul>
-{notes}
-</ul>
+        <form method="post">
+            <label for="titulo">Título</label>
+            <input id="titulo" type="text" name="titulo" />
+            <label for="detalhes">Detalhes</label>
+            <input id="detalhes" name="detalhes" />
+            <input type="submit" />
+        </form>
 
-</body>
+        <ul>
+        {notes}
+        </ul>
+
+    </body>
 </html>
-'''

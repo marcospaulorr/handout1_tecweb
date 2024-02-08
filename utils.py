@@ -5,7 +5,17 @@ def read_file(filepath):
         return file.read()
 
 def extract_route(request):
-    return request.split()[1].lstrip('/')
+    # Divide a requisição em linhas
+    lines = request.split('\n')
+    
+    # Pega a primeira linha (linha de requisição)
+    request_line = lines[0]
+    
+    # Divide a linha de requisição em espaços e pega a rota
+    route = request_line.split(' ')[1]
+    
+    # Remove o primeiro caractere (/) da rota
+    return route[1:]
 
 def load_data(filename):
     # Constrói o caminho do arquivo assumindo que ele está na pasta 'data'
@@ -38,3 +48,18 @@ def load_template(filename):
     except Exception as e:
         print(f"Ocorreu um erro ao ler o arquivo {filepath}: {e}")
         return None
+    
+def add_note_to_json(title, details, filename='notes.json'):
+    try:
+        # Carrega as notas existentes
+        with open(filename, 'r', encoding='utf-8') as file:
+            notes = json.load(file)
+    except FileNotFoundError:
+        notes = []
+
+    # Adiciona a nova nota
+    notes.append({'titulo': title, 'detalhes': details})
+
+    # Salva as notas de volta no arquivo JSON
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(notes, file, indent=4)
