@@ -1,7 +1,24 @@
 import socket
 
-SERVER_HOST = '0.0.0.0'
-SERVER_PORT = 8080
+SERVER_HOST = 'localhost'
+SERVER_PORT = 8081
+
+RESPONSE_TEMPLATE = '''HTTP/1.1 200 OK
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Get-it</title>
+</head>
+<body>
+
+<h1>Get-it</h1>
+<p>Como o Post-it, mas com outro verbo</p>
+
+</body>
+</html>
+'''
 
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,9 +28,15 @@ server_socket.listen()
 
 print(f'Servidor escutando em (ctrl+click): http://{SERVER_HOST}:{SERVER_PORT}')
 
-client_connection, client_address = server_socket.accept()
+while True:
+    client_connection, client_address = server_socket.accept()
 
-print('Um cliente se conectou!')
+    request = client_connection.recv(1024).decode()
+    print('*'*100)
+    print(request)
 
-client_connection.close()
+    client_connection.sendall(RESPONSE_TEMPLATE.encode())
+
+    client_connection.close()
+
 server_socket.close()
