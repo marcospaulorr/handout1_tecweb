@@ -63,3 +63,15 @@ def add_note_to_json(title, details, filename='notes.json'):
     # Salva as notas de volta no arquivo JSON
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(notes, file, indent=4)
+
+def build_response(body='', code=200, reason='OK', headers=''):
+    # Constrói a linha de status da resposta
+    status_line = f"HTTP/1.1 {code} {reason}\r\n"
+
+    # Adiciona cabeçalhos padrão se não forem fornecidos
+    if not headers:
+        headers = "Content-Type: text/html; charset=utf-8"
+
+    # Constrói a resposta completa
+    response = f"{status_line}{headers}\r\n\r\n{body}"
+    return response.encode()

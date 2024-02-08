@@ -1,4 +1,4 @@
-from utils import load_data, load_template, add_note_to_json
+from utils import load_data, load_template, add_note_to_json, build_response
 from urllib.parse import unquote_plus
 
 def index(request):
@@ -15,6 +15,9 @@ def index(request):
         # Adiciona a nova anotação ao arquivo JSON
         add_note_to_json(params['titulo'], params['detalhes'])
 
+        # Retorna uma resposta de redirecionamento para requisições POST
+        return build_response(code=303, reason='See Other', headers='Location: /')
+
     # Processamento para requisições GET ou após processar o POST
     note_template = load_template('components/note.html')
     notes_li = [
@@ -23,4 +26,8 @@ def index(request):
     ]
     notes = '\n'.join(notes_li)
 
-    return load_template('index.html').format(notes=notes).encode()
+    # Retorna a página principal para requisições GET
+    body = load_template('index.html').format(notes=notes)
+    return build_response(body)
+
+
