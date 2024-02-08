@@ -3,5 +3,5 @@ def read_file(filepath):
         return file.read()
 
 def extract_route(request):
-    return request.split()[1].lrstrip('/')
+    return request.split()[1].lstrip('/')
 
